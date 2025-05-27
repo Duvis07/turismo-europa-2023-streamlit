@@ -5,14 +5,15 @@ DESCRIPCION = "Descripción:"
 VENTAJAS = "Ventajas:"
 DESVENTAJAS = "Desventajas:"
 CASOSUSO = "Casos de uso ideales:"
+VER_DETALLES = "Ver detalles"
 
 def mostrar_caso_estudio():
-    st.title("Caso de estudio: análisis de los diferentes tipos de datos")
+    st.markdown("<h1 style='font-size: 36px; color: #1a365d;'>Caso de estudio: análisis de los diferentes tipos de datos</h1>", unsafe_allow_html=True)
     
 
     
     # Introducción
-    st.header("Introducción")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Introducción</h2>", unsafe_allow_html=True)
     st.write("""
     En la actualidad, el análisis de datos se ha convertido en una actividad esencial para la toma de decisiones en diversos contextos. 
     Sin embargo, interpretar correctamente los datos no solo depende de su calidad, sino también de la manera en que se visualizan. 
@@ -23,7 +24,7 @@ def mostrar_caso_estudio():
     """)
     
     # Objetivos
-    st.header("Objetivos")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Objetivos</h2>", unsafe_allow_html=True)
     st.markdown("""
     - Investigar y comparar al menos tres herramientas populares de visualización de datos.
     - Seleccionar la herramienta más adecuada para analizar un conjunto de datos simulados con diferentes tipos de variables.
@@ -33,7 +34,7 @@ def mostrar_caso_estudio():
     """)
     
     # Investigación de herramientas
-    st.header("Investigación de herramientas de visualización de datos")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Investigación de herramientas de visualización de datos</h2>", unsafe_allow_html=True)
     st.write("""
     A continuación, se presenta una comparativa de tres herramientas populares de visualización de datos: 
     Tableau, Streamlit y Python (con las bibliotecas Seaborn y Plotly). Se analizan sus características principales, 
@@ -41,7 +42,8 @@ def mostrar_caso_estudio():
     """)
     
     # Tableau
-    with st.expander("Herramienta 1: Tableau", expanded=True):
+    st.markdown("<h2 style='font-size: 24px; color: #1a365d;'>Herramienta 1: Tableau</h2>", unsafe_allow_html=True)
+    with st.expander("Ver detalles", expanded=True):
         st.subheader(DESCRIPCION)
         st.write("""
         Tableau es una herramienta de visualización de datos ampliamente utilizada por empresas y profesionales del análisis de datos. 
@@ -72,7 +74,8 @@ def mostrar_caso_estudio():
         """)
     
     # Streamlit
-    with st.expander("Herramienta 2: Streamlit", expanded=True):
+    st.markdown("<h2 style='font-size: 24px; color: #1a365d;'>Herramienta 2: Streamlit</h2>", unsafe_allow_html=True)
+    with st.expander("Ver detalles", expanded=True):
         st.subheader(DESCRIPCION)
         st.write("""
         Streamlit es una herramienta de código abierto que permite crear aplicaciones web interactivas para visualización de datos 
@@ -104,7 +107,8 @@ def mostrar_caso_estudio():
         """)
     
     # Python
-    with st.expander("Herramienta 3: Python (bibliotecas Seaborn y Plotly)", expanded=True):
+    st.markdown("<h2 style='font-size: 24px; color: #1a365d;'>Herramienta 3: Python (bibliotecas Seaborn y Plotly)</h2>", unsafe_allow_html=True)
+    with st.expander("Ver detalles", expanded=True):
         st.subheader(DESCRIPCION)
         st.write("""
         Python es un lenguaje de programación muy utilizado en ciencia de datos, y junto con bibliotecas como Seaborn y Plotly, 
@@ -134,7 +138,7 @@ def mostrar_caso_estudio():
         """)
     
     # Justificación
-    st.header("Justificación de la selección de la herramienta")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Justificación de la selección de la herramienta</h2>", unsafe_allow_html=True)
     st.write("""
     Para llevar a cabo el análisis de tendencias turísticas en Europa 2023, elegimos Streamlit como herramienta principal, 
     ya que consideramos que se ajustaba muy bien a los distintos objetivos del proyecto. A continuación, explicamos por qué 
@@ -178,7 +182,7 @@ def mostrar_caso_estudio():
     """)
     
     # Tipo de visualizaciones
-    st.header("Tipo de visualizaciones")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Tipo de visualizaciones</h2>", unsafe_allow_html=True)
     st.markdown("""
     - Patrones estacionales de viaje.
     - Destinos más populares.
@@ -189,7 +193,7 @@ def mostrar_caso_estudio():
     """)
     
     # Conclusión
-    st.header("Conclusión")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Conclusión</h2>", unsafe_allow_html=True)
     st.write("""
     A lo largo de este trabajo pudimos analizar diferentes aspectos clave del turismo en Europa durante el año 2023, 
     utilizando Streamlit como herramienta principal para visualizar y explorar los datos. Gracias a las visualizaciones 
@@ -203,7 +207,7 @@ def mostrar_caso_estudio():
     """)
     
     # Referencias
-    st.header("Referencias Bibliográficas")
+    st.markdown("<h2 style='font-size: 32px; color: #1a365d;'>Referencias Bibliográficas</h2>", unsafe_allow_html=True)
     st.markdown("""
     - Streamlit. (s/f). Streamlit.io. Recuperado el 27 de mayo de 2025, de https://streamlit.io/
     - (S/f). Tableau.com. Recuperado el 27 de mayo de 2025, de https://www.tableau.com/es-mx/why-tableau

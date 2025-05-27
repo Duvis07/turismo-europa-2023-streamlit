@@ -149,7 +149,7 @@ with tab2:
 
     with col1:
         # 1. Patrones estacionales de viaje
-        st.subheader("Patrones estacionales de viaje")
+        st.markdown("<h2 style='font-size: 28px; color: #1a365d;'>Patrones estacionales de viaje</h2>", unsafe_allow_html=True)
 
         # Ordenar los meses cronológicamente
         meses_orden = {
@@ -164,16 +164,21 @@ with tab2:
         viajes_por_mes['orden_mes'] = viajes_por_mes['Mes'].map(meses_orden)
         viajes_por_mes = viajes_por_mes.sort_values('orden_mes')
 
-        # Crear gráfico de barras con nuevos colores
+        # Crear gráfico de barras con nuevos colores y mayor contraste
         fig_meses = px.bar(
             viajes_por_mes,
             x='Mes',
             y=COL_NUM_VIAJES,
             color=COL_NUM_VIAJES,
-            color_continuous_scale='Blues',
+            color_continuous_scale=['#E6EFF6', '#D4E6F1', '#A9CCE3', '#7FB3D5', '#5499C7', '#2980B9', '#1A5276'],
             title='Número de viajes por mes'
         )
-        fig_meses.update_layout(xaxis_title='Mes', yaxis_title=COL_NUM_VIAJES)
+        fig_meses.update_layout(
+            xaxis_title='Mes', 
+            yaxis_title=COL_NUM_VIAJES,
+            coloraxis_colorbar=dict(title=COL_NUM_VIAJES),
+            plot_bgcolor='white'
+        )
         st.plotly_chart(fig_meses, use_container_width=True)
 
         # Análisis de patrones estacionales
@@ -203,7 +208,7 @@ with tab2:
 
     with col2:
         # 2. Destinos más populares
-        st.subheader("Destinos más populares")
+        st.markdown("<h2 style='font-size: 28px; color: #1a365d;'>Destinos más populares</h2>", unsafe_allow_html=True)
 
         # Contar viajes por ciudad y obtener top 10
         top_ciudades = df_filtrado['ciudad'].value_counts().nlargest(10).reset_index()
@@ -252,7 +257,7 @@ with tab3:
 
     with col1:
         # 3. Relación entre tipo de alojamiento y gasto diario
-        st.subheader("Relación entre tipo de alojamiento y gasto diario")
+        st.markdown("<h2 style='font-size: 28px; color: #1a365d;'>Relación entre tipo de alojamiento y gasto diario</h2>", unsafe_allow_html=True)
 
         # Crear diagrama de caja con nuevos colores
         fig_alojamiento = px.box(
@@ -295,7 +300,7 @@ with tab3:
 
     with col2:
         # 4. Satisfacción del cliente por país
-        st.subheader("Satisfacción del cliente por país")
+        st.markdown("<h2 style='font-size: 28px; color: #1a365d;'>Satisfacción del cliente por país</h2>", unsafe_allow_html=True)
 
         # Crear diagrama de caja con nuevos colores
         fig_valoracion = px.box(
@@ -342,7 +347,7 @@ with tab4:
 
     with col1:
         # 5. Duración promedio de estancia por destino
-        st.subheader("Duración promedio de estancia por destino")
+        st.markdown("<h2 style='font-size: 28px; color: #1a365d;'>Duración promedio de estancia por destino</h2>", unsafe_allow_html=True)
 
         # Calcular duración promedio por ciudad
         duracion_promedio = df_filtrado.groupby('ciudad')['duracion_estancia'].mean().reset_index()
@@ -388,7 +393,7 @@ with tab4:
 
     with col2:
         # 6. Distribución geográfica de los viajes
-        st.subheader("Distribución geográfica de los viajes")
+        st.markdown("<h2 style='font-size: 28px; color: #1a365d;'>Distribución geográfica de los viajes</h2>", unsafe_allow_html=True)
 
         # Crear mapa
         m = folium.Map(location=[48.8566, 2.3522], zoom_start=4)
