@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: turismo-europa-2023
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: streamlit run app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
