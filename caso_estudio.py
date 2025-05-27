@@ -1,55 +1,15 @@
 import streamlit as st
 
+# Constantes para textos repetidos
+DESCRIPCION = "Descripción:"
+VENTAJAS = "Ventajas:"
+DESVENTAJAS = "Desventajas:"
+CASOSUSO = "Casos de uso ideales:"
+
 def mostrar_caso_estudio():
     st.title("Caso de estudio: análisis de los diferentes tipos de datos")
     
-    # Volver a un enfoque simple para evitar problemas de renderizado
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Estudiantes:</h3>
-            <p style="margin: 8px 0; font-size: 16px;">Duvan Arley Botero</p>
-            <p style="margin: 8px 0; font-size: 16px;">Daniel Felipe Marin</p>
-            <p style="margin: 8px 0; font-size: 16px;">Angelo Duque</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 15px;">
-            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Docente:</h3>
-            <p style="margin: 8px 0; font-size: 16px;">Aharon Alexander Aguas</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Curso:</h3>
-            <p style="margin: 8px 0; font-size: 16px;">Visualización de toma de decisiones</p>
-            <p style="margin: 8px 0; font-size: 16px;">(PREICA2501B020125)</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 15px;">
-            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Programa:</h3>
-            <p style="margin: 8px 0; font-size: 16px;">Ingeniería De Software y Datos</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Centrar la información de la universidad
-    st.markdown("<hr style='margin: 30px 0'>", unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style="text-align: center; background-color: #f0f4f8; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin: 0 auto; max-width: 600px;">
-        <h2 style="color: #2c5282; margin-bottom: 10px; font-weight: 600;">Institución Universitaria Digital de Antioquia</h2>
-        <p style="font-size: 18px; color: #4a5568; margin-bottom: 0;">2025</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
+
     
     # Introducción
     st.header("Introducción")
@@ -82,13 +42,13 @@ def mostrar_caso_estudio():
     
     # Tableau
     with st.expander("Herramienta 1: Tableau", expanded=True):
-        st.subheader("Descripción:")
+        st.subheader(DESCRIPCION)
         st.write("""
         Tableau es una herramienta de visualización de datos ampliamente utilizada por empresas y profesionales del análisis de datos. 
         Permite crear dashboards interactivos y representaciones visuales de datos de forma intuitiva y sin necesidad de programar.
         """)
         
-        st.subheader("Ventajas:")
+        st.subheader(VENTAJAS)
         st.markdown("""
         - Interfaz gráfica amigable y de fácil uso.
         - Gran variedad de gráficos y visualizaciones avanzadas.
@@ -97,14 +57,14 @@ def mostrar_caso_estudio():
         - Amplia comunidad de usuarios y recursos de aprendizaje.
         """)
         
-        st.subheader("Desventajas:")
+        st.subheader(DESVENTAJAS)
         st.markdown("""
         - Es una herramienta de pago (con versión gratuita limitada llamada Tableau Public).
         - Puede tener una curva de aprendizaje empinada para visualizaciones complejas.
         - Algunas funciones avanzadas requieren conocimientos más técnicos.
         """)
         
-        st.subheader("Casos de uso ideales:")
+        st.subheader(CASOSUSO)
         st.markdown("""
         - Visualización de datos empresariales y de mercado.
         - Análisis de rendimiento y métricas en tiempo real.
@@ -113,14 +73,14 @@ def mostrar_caso_estudio():
     
     # Streamlit
     with st.expander("Herramienta 2: Streamlit", expanded=True):
-        st.subheader("Descripción:")
+        st.subheader(DESCRIPCION)
         st.write("""
         Streamlit es una herramienta de código abierto que permite crear aplicaciones web interactivas para visualización de datos 
         utilizando Python. Es especialmente útil para científicos de datos y desarrolladores que quieren compartir sus análisis de forma 
         interactiva sin necesidad de conocimientos avanzados en desarrollo web.
         """)
         
-        st.subheader("Ventajas:")
+        st.subheader(VENTAJAS)
         st.markdown("""
         - Totalmente gratuito y de código abierto.
         - Sintaxis simple y directa en Python.
@@ -129,14 +89,14 @@ def mostrar_caso_estudio():
         - Despliegue sencillo en la nube a través de Streamlit Cloud.
         """)
         
-        st.subheader("Desventajas:")
+        st.subheader(DESVENTAJAS)
         st.markdown("""
         - Requiere conocimientos básicos de programación en Python.
         - Menos opciones de personalización visual que herramientas comerciales.
         - Puede tener limitaciones de rendimiento con conjuntos de datos muy grandes.
         """)
         
-        st.subheader("Casos de uso ideales:")
+        st.subheader(CASOSUSO)
         st.markdown("""
         - Prototipos rápidos de dashboards y aplicaciones de datos.
         - Proyectos académicos y de investigación.
@@ -145,13 +105,13 @@ def mostrar_caso_estudio():
     
     # Python
     with st.expander("Herramienta 3: Python (bibliotecas Seaborn y Plotly)", expanded=True):
-        st.subheader("Descripción:")
+        st.subheader(DESCRIPCION)
         st.write("""
         Python es un lenguaje de programación muy utilizado en ciencia de datos, y junto con bibliotecas como Seaborn y Plotly, 
         permite crear visualizaciones estáticas y dinámicas altamente personalizadas.
         """)
         
-        st.subheader("Ventajas:")
+        st.subheader(VENTAJAS)
         st.markdown("""
         - Total flexibilidad en el diseño y personalización de gráficos.
         - Ideal para análisis estadístico profundo y visualización exploratoria.
@@ -159,14 +119,14 @@ def mostrar_caso_estudio():
         - Plotly permite gráficos interactivos que pueden integrarse en páginas web o notebooks.
         """)
         
-        st.subheader("Desventajas:")
+        st.subheader(DESVENTAJAS)
         st.markdown("""
         - Requiere conocimientos de programación en Python.
         - No tiene una interfaz gráfica visual (todo se hace por código).
         - Puede consumir más tiempo para tareas simples si se compara con herramientas visuales como Streamlit o Tableau.
         """)
         
-        st.subheader("Casos de uso ideales:")
+        st.subheader(CASOSUSO)
         st.markdown("""
         - Análisis exploratorio en ciencia de datos.
         - Proyectos de investigación o académicos con requerimientos personalizados.
