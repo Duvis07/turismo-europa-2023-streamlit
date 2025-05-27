@@ -8,6 +8,10 @@ import folium
 from streamlit_folium import folium_static
 import calendar
 
+# Constantes para evitar duplicados (corrige errores de lint)
+COL_NUM_VIAJES = 'Número de viajes'
+COL_DURACION_DIAS = 'Duración promedio (días)'
+
 # Importar módulos personalizados
 from caso_estudio import mostrar_caso_estudio
 
@@ -156,7 +160,7 @@ with tab2:
 
         # Contar viajes por mes y ordenar
         viajes_por_mes = df_filtrado['mes_nombre'].value_counts().reset_index()
-        viajes_por_mes.columns = ['Mes', 'Número de viajes']
+        viajes_por_mes.columns = ['Mes', COL_NUM_VIAJES]
         viajes_por_mes['orden_mes'] = viajes_por_mes['Mes'].map(meses_orden)
         viajes_por_mes = viajes_por_mes.sort_values('orden_mes')
 
@@ -164,23 +168,38 @@ with tab2:
         fig_meses = px.bar(
             viajes_por_mes,
             x='Mes',
-            y='Número de viajes',
-            color='Número de viajes',
+            y=COL_NUM_VIAJES,
+            color=COL_NUM_VIAJES,
             color_continuous_scale='Blues',
             title='Número de viajes por mes'
         )
-        fig_meses.update_layout(xaxis_title='Mes', yaxis_title='Número de viajes')
+        fig_meses.update_layout(xaxis_title='Mes', yaxis_title=COL_NUM_VIAJES)
         st.plotly_chart(fig_meses, use_container_width=True)
 
         # Análisis de patrones estacionales
-        max_mes = viajes_por_mes.loc[viajes_por_mes['Número de viajes'].idxmax()]
-        min_mes = viajes_por_mes.loc[viajes_por_mes['Número de viajes'].idxmin()]
+        max_mes = viajes_por_mes.loc[viajes_por_mes[COL_NUM_VIAJES].idxmax()]
+        min_mes = viajes_por_mes.loc[viajes_por_mes[COL_NUM_VIAJES].idxmin()]
 
+        # Tarjeta de insights con diseño mejorado
         st.markdown(f"""
-        **Insights:**
-        - La temporada alta es en **{max_mes['Mes']}** con **{max_mes['Número de viajes']}** viajes.
-        - La temporada baja es en **{min_mes['Mes']}** con **{min_mes['Número de viajes']}** viajes.
-        """)
+        <div style="background-color: #f8f9fa; border-left: 4px solid #4a86e8; padding: 15px; border-radius: 5px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h4 style="color: #2c5282; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px;">📊</span> Insights Clave
+            </h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #4a86e8; font-weight: bold;">Temporada alta:</span> 
+                    <span style="background-color: #e6f2ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{max_mes['Mes']}</span> con 
+                    <span style="background-color: #e6f2ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{max_mes[COL_NUM_VIAJES]}</span> viajes
+                </li>
+                <li>
+                    <span style="color: #4a86e8; font-weight: bold;">Temporada baja:</span> 
+                    <span style="background-color: #e6f2ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{min_mes['Mes']}</span> con 
+                    <span style="background-color: #e6f2ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{min_mes[COL_NUM_VIAJES]}</span> viajes
+                </li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         # 2. Destinos más populares
@@ -188,29 +207,44 @@ with tab2:
 
         # Contar viajes por ciudad y obtener top 10
         top_ciudades = df_filtrado['ciudad'].value_counts().nlargest(10).reset_index()
-        top_ciudades.columns = ['Ciudad', 'Número de viajes']
+        top_ciudades.columns = ['Ciudad', COL_NUM_VIAJES]
 
         # Crear gráfico de barras horizontales con nuevos colores
         fig_ciudades = px.bar(
             top_ciudades,
             y='Ciudad',
-            x='Número de viajes',
-            color='Número de viajes',
+            x=COL_NUM_VIAJES,
+            color=COL_NUM_VIAJES,
             color_continuous_scale='Reds',
             orientation='h',
             title='Top 10 ciudades más visitadas'
         )
-        fig_ciudades.update_layout(yaxis_title='Ciudad', xaxis_title='Número de viajes')
+        fig_ciudades.update_layout(yaxis_title='Ciudad', xaxis_title=COL_NUM_VIAJES)
         st.plotly_chart(fig_ciudades, use_container_width=True)
 
         # Análisis de destinos populares
         top_ciudad = top_ciudades.iloc[0]
 
+        # Tarjeta de insights con diseño mejorado
+        porcentaje_top3 = round(top_ciudades.iloc[:3][COL_NUM_VIAJES].sum() / df_filtrado.shape[0] * 100, 1)
         st.markdown(f"""
-        **Insights:**
-        - **{top_ciudad['Ciudad']}** es la ciudad más visitada con **{top_ciudad['Número de viajes']}** viajes.
-        - Las 3 ciudades más populares representan el **{round(top_ciudades.iloc[:3]['Número de viajes'].sum() / df_filtrado.shape[0] * 100, 1)}%** del total de viajes.
-        """)
+        <div style="background-color: #fdf2f2; border-left: 4px solid #e53e3e; padding: 15px; border-radius: 5px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h4 style="color: #c53030; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px;">🌆</span> Insights Clave
+            </h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #e53e3e; font-weight: bold;">Ciudad más visitada:</span> 
+                    <span style="background-color: #fff5f5; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{top_ciudad['Ciudad']}</span> con 
+                    <span style="background-color: #fff5f5; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{top_ciudad[COL_NUM_VIAJES]}</span> viajes
+                </li>
+                <li>
+                    <span style="color: #e53e3e; font-weight: bold;">Concentración:</span> 
+                    Las 3 ciudades más populares representan el <span style="background-color: #fff5f5; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{porcentaje_top3}%</span> del total de viajes
+                </li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 with tab3:
     # Crear dos columnas para los gráficos
@@ -236,11 +270,28 @@ with tab3:
         gasto_promedio = df_filtrado.groupby('tipo_alojamiento')['gasto_diario'].mean().reset_index()
         gasto_promedio = gasto_promedio.sort_values('gasto_diario', ascending=False)
 
+        # Tarjeta de insights con diseño mejorado
+        max_gasto = round(gasto_promedio.iloc[0]['gasto_diario'], 2)
+        min_gasto = round(gasto_promedio.iloc[-1]['gasto_diario'], 2)
         st.markdown(f"""
-        **Insights:**
-        - Los alojamientos tipo **{gasto_promedio.iloc[0]['tipo_alojamiento']}** tienen el mayor gasto diario promedio (**{round(gasto_promedio.iloc[0]['gasto_diario'], 2)}€**).
-        - Los alojamientos tipo **{gasto_promedio.iloc[-1]['tipo_alojamiento']}** tienen el menor gasto diario promedio (**{round(gasto_promedio.iloc[-1]['gasto_diario'], 2)}€**).
-        """)
+        <div style="background-color: #f0fff4; border-left: 4px solid #38a169; padding: 15px; border-radius: 5px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h4 style="color: #2f855a; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px;">💰</span> Insights de Gasto
+            </h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #38a169; font-weight: bold;">Mayor gasto:</span> 
+                    Alojamientos tipo <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{gasto_promedio.iloc[0]['tipo_alojamiento']}</span> con 
+                    <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{max_gasto}€</span> diarios
+                </li>
+                <li>
+                    <span style="color: #38a169; font-weight: bold;">Menor gasto:</span> 
+                    Alojamientos tipo <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{gasto_promedio.iloc[-1]['tipo_alojamiento']}</span> con 
+                    <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{min_gasto}€</span> diarios
+                </li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         # 4. Satisfacción del cliente por país
@@ -262,11 +313,28 @@ with tab3:
         valoracion_promedio = df_filtrado.groupby('pais')['valoracion'].mean().reset_index()
         valoracion_promedio = valoracion_promedio.sort_values('valoracion', ascending=False)
 
+        # Tarjeta de insights con diseño mejorado
+        max_valoracion = round(valoracion_promedio.iloc[0]['valoracion'], 2)
+        min_valoracion = round(valoracion_promedio.iloc[-1]['valoracion'], 2)
         st.markdown(f"""
-        **Insights:**
-        - **{valoracion_promedio.iloc[0]['pais']}** tiene la valoración promedio más alta (**{round(valoracion_promedio.iloc[0]['valoracion'], 2)}** de 5).
-        - **{valoracion_promedio.iloc[-1]['pais']}** tiene la valoración promedio más baja (**{round(valoracion_promedio.iloc[-1]['valoracion'], 2)}** de 5).
-        """)
+        <div style="background-color: #ebf8ff; border-left: 4px solid #3182ce; padding: 15px; border-radius: 5px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h4 style="color: #2b6cb0; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px;">⭐</span> Insights de Satisfacción
+            </h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #3182ce; font-weight: bold;">Mayor satisfacción:</span> 
+                    <span style="background-color: #e6f6ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{valoracion_promedio.iloc[0]['pais']}</span> con 
+                    <span style="background-color: #e6f6ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{max_valoracion}/5</span> puntos
+                </li>
+                <li>
+                    <span style="color: #3182ce; font-weight: bold;">Menor satisfacción:</span> 
+                    <span style="background-color: #e6f6ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{valoracion_promedio.iloc[-1]['pais']}</span> con 
+                    <span style="background-color: #e6f6ff; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{min_valoracion}/5</span> puntos
+                </li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
 with tab4:
     # Crear dos columnas para los gráficos
@@ -279,28 +347,44 @@ with tab4:
         # Calcular duración promedio por ciudad
         duracion_promedio = df_filtrado.groupby('ciudad')['duracion_estancia'].mean().reset_index()
         duracion_promedio = duracion_promedio.sort_values('duracion_estancia', ascending=False).head(10)
-        duracion_promedio.columns = ['Ciudad', 'Duración promedio (días)']
+        duracion_promedio.columns = ['Ciudad', COL_DURACION_DIAS]
 
         # Crear gráfico de barras con nuevos colores
         fig_duracion = px.bar(
             duracion_promedio,
             x='Ciudad',
-            y='Duración promedio (días)',
-            color='Duración promedio (días)',
+            y=COL_DURACION_DIAS,
+            color=COL_DURACION_DIAS,
             color_continuous_scale='Greens',
             title='Top 10 ciudades con mayor duración de estancia'
         )
-        fig_duracion.update_layout(xaxis_title='Ciudad', yaxis_title='Duración promedio (días)')
+        fig_duracion.update_layout(xaxis_title='Ciudad', yaxis_title=COL_DURACION_DIAS)
         st.plotly_chart(fig_duracion, use_container_width=True)
 
         # Análisis de duración de estancia
         top_duracion = duracion_promedio.iloc[0]
 
+        # Tarjeta de insights con diseño mejorado
+        max_duracion = round(top_duracion[COL_DURACION_DIAS], 1)
+        promedio_general = round(df_filtrado['duracion_estancia'].mean(), 1)
         st.markdown(f"""
-        **Insights:**
-        - **{top_duracion['Ciudad']}** tiene la estancia promedio más larga (**{round(top_duracion['Duración promedio (días)'], 1)}** días).
-        - La duración promedio general de estancia es de **{round(df_filtrado['duracion_estancia'].mean(), 1)}** días.
-        """)
+        <div style="background-color: #f0fff4; border-left: 4px solid #48bb78; padding: 15px; border-radius: 5px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h4 style="color: #2f855a; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px;">📅</span> Insights de Duración
+            </h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #48bb78; font-weight: bold;">Estancia más larga:</span> 
+                    <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{top_duracion['Ciudad']}</span> con 
+                    <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{max_duracion} días</span>
+                </li>
+                <li>
+                    <span style="color: #48bb78; font-weight: bold;">Promedio general:</span> 
+                    <span style="background-color: #e6ffec; padding: 2px 6px; border-radius: 3px; font-weight: bold;">{promedio_general} días</span> de estancia
+                </li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
     with col2:
         # 6. Distribución geográfica de los viajes
@@ -359,106 +443,29 @@ with tab4:
         # Mostrar mapa
         folium_static(m, width=700, height=500)
 
+        # Tarjeta de insights con diseño mejorado
         st.markdown("""
-        **Insights del mapa:**
-        - Los círculos más grandes representan estancias más largas.
-        - Cada color representa un país diferente.
-        - Haz clic en un punto para ver detalles del viaje.
-        """)
+        <div style="background-color: #faf5ff; border-left: 4px solid #805ad5; padding: 15px; border-radius: 5px; margin-top: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h4 style="color: #553c9a; margin-top: 0; display: flex; align-items: center; gap: 8px;">
+                <span style="font-size: 20px;">📍</span> Insights del Mapa
+            </h4>
+            <ul style="margin-bottom: 0; padding-left: 20px;">
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #805ad5; font-weight: bold;">Tamaño:</span> 
+                    Los círculos más grandes representan estancias más largas
+                </li>
+                <li style="margin-bottom: 8px;">
+                    <span style="color: #805ad5; font-weight: bold;">Color:</span> 
+                    Cada color representa un país diferente
+                </li>
+                <li>
+                    <span style="color: #805ad5; font-weight: bold;">Interacción:</span> 
+                    Haz clic en un punto para ver detalles del viaje
+                </li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
 
-# Ya no es necesario este bloque porque el caso de estudio ahora es la primera pestaña (tab1)
-
-# Añadir sección de conclusiones con mejor diseño
-st.markdown("""<div style="margin: 40px 0 20px 0;"><hr style='height:2px;border-width:0;color:#4a86e8;background-color:#4a86e8'></div>""", unsafe_allow_html=True)
-st.markdown("""<h1 style="color: #1a365d; display: flex; align-items: center; gap: 10px; margin-bottom: 20px;"><span style="font-size: 32px;">🎯</span> Conclusiones e Insights Clave</h1>""", unsafe_allow_html=True)
-
-# Calcular algunas métricas para las conclusiones
-pais_mas_visitado = df_filtrado['pais'].value_counts().idxmax()
-ciudad_mas_visitada = df_filtrado['ciudad'].value_counts().idxmax()
-mes_mas_popular = df_filtrado['mes_nombre'].value_counts().idxmax()
-alojamiento_mas_comun = df_filtrado['tipo_alojamiento'].value_counts().idxmax()
-motivo_principal = df_filtrado['motivo_viaje'].value_counts().idxmax()
-gasto_promedio = df_filtrado['gasto_diario'].mean()
-duracion_promedio = df_filtrado['duracion_estancia'].mean()
-
-# Introducción a las conclusiones
-st.markdown("""
-<div class="insight-card" style="margin-bottom: 30px;">
-    <p style="font-size: 16px; line-height: 1.8;">
-        Nuestro análisis exhaustivo de las tendencias turísticas en Europa durante 2023 ha revelado patrones significativos 
-        que pueden transformar las estrategias de marketing y optimizar la oferta turística.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Destinos estratégicos
-st.markdown(f"""
-<div class="insight-card" style="border-left-color: #e53e3e;">
-    <h3 style="color: #c53030; display: flex; align-items: center; gap: 8px; margin-top: 0;">
-        <span style="font-size: 24px;">📍</span> Destinos Estratégicos
-    </h3>
-    <p style="font-size: 16px; line-height: 1.8;">
-        <span style="font-weight: bold; color: #2d3748;">{pais_mas_visitado}</span> lidera como el destino más popular, 
-        con <span style="font-weight: bold; color: #2d3748;">{ciudad_mas_visitada}</span> atrayendo el mayor número de visitantes. 
-        Recomendamos enfocar campañas promocionales en estos destinos de alta demanda mientras se desarrollan paquetes 
-        especiales para destinos emergentes.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Patrones temporales
-st.markdown(f"""
-<div class="insight-card" style="border-left-color: #3182ce;">
-    <h3 style="color: #2b6cb0; display: flex; align-items: center; gap: 8px; margin-top: 0;">
-        <span style="font-size: 24px;">📅</span> Patrones Temporales
-    </h3>
-    <p style="font-size: 16px; line-height: 1.8;">
-        <span style="font-weight: bold; color: #2d3748;">{mes_mas_popular}</span> muestra el pico de actividad turística. 
-        Sugerimos implementar precios dinámicos y ofertas especiales para temporadas bajas para optimizar 
-        la ocupación durante todo el año.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Preferencias de alojamiento
-st.markdown(f"""
-<div class="insight-card" style="border-left-color: #38a169;">
-    <h3 style="color: #2f855a; display: flex; align-items: center; gap: 8px; margin-top: 0;">
-        <span style="font-size: 24px;">🏠</span> Preferencias de Alojamiento
-    </h3>
-    <p style="font-size: 16px; line-height: 1.8;">
-        Los viajeros prefieren mayoritariamente <span style="font-weight: bold; color: #2d3748;">{alojamiento_mas_comun.lower()}</span>, 
-        lo que indica una oportunidad para desarrollar alianzas estratégicas con estos proveedores y crear paquetes exclusivos.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Análisis económico
-st.markdown(f"""
-<div class="insight-card" style="border-left-color: #d69e2e;">
-    <h3 style="color: #b7791f; display: flex; align-items: center; gap: 8px; margin-top: 0;">
-        <span style="font-size: 24px;">💰</span> Análisis Económico
-    </h3>
-    <p style="font-size: 16px; line-height: 1.8;">
-        Con un gasto diario promedio de <span style="font-weight: bold; color: #2d3748;">{round(gasto_promedio, 2)}€</span> 
-        y estancias que promedian <span style="font-weight: bold; color: #2d3748;">{round(duracion_promedio, 1)} días</span>, 
-        identificamos un potencial para desarrollar paquetes de valor agregado que incrementen tanto la duración como el gasto.
-    </p>
-</div>
-""", unsafe_allow_html=True)
-
-# Motivaciones de viaje
-st.markdown(f"""
-<div class="insight-card" style="border-left-color: #805ad5;">
-    <h3 style="color: #6b46c1; display: flex; align-items: center; gap: 8px; margin-top: 0;">
-        <span style="font-size: 24px;">🔍</span> Motivaciones de Viaje
-    </h3>
-    <p style="font-size: 16px; line-height: 1.8;">
-        El motivo principal de viaje es <span style="font-weight: bold; color: #2d3748;">{motivo_principal.lower()}</span>, 
-        lo que sugiere que las campañas de marketing deberían enfatizar experiencias relacionadas con esta motivación 
-        para maximizar su impacto.
-    </p>
-</div>
-""", unsafe_allow_html=True)
+# Se ha eliminado la sección de Conclusiones e Insights Clave
 
 # Se ha eliminado el pie de página

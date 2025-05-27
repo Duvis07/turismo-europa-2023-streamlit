@@ -3,27 +3,51 @@ import streamlit as st
 def mostrar_caso_estudio():
     st.title("Caso de estudio: análisis de los diferentes tipos de datos")
     
-    # Información de estudiantes y curso
-    col1, col2 = st.columns([3, 3])
+    # Volver a un enfoque simple para evitar problemas de renderizado
+    col1, col2 = st.columns(2)
     
     with col1:
-        st.subheader("Estudiantes:")
-        st.write("Duvan Arley Botero")
-        st.write("Daniel Felipe Marin")
-        st.write("Angelo Duque")
+        st.markdown("""
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Estudiantes:</h3>
+            <p style="margin: 8px 0; font-size: 16px;">Duvan Arley Botero</p>
+            <p style="margin: 8px 0; font-size: 16px;">Daniel Felipe Marin</p>
+            <p style="margin: 8px 0; font-size: 16px;">Angelo Duque</p>
+        </div>
+        """, unsafe_allow_html=True)
         
-        st.subheader("Docente:")
-        st.write("Aharon Alexander Aguas")
+        st.markdown("""
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 15px;">
+            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Docente:</h3>
+            <p style="margin: 8px 0; font-size: 16px;">Aharon Alexander Aguas</p>
+        </div>
+        """, unsafe_allow_html=True)
     
     with col2:
-        st.subheader("Curso:")
-        st.write("Visualización de toma de decisiones")
-        st.write("(PREICA2501B020125)")
+        st.markdown("""
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Curso:</h3>
+            <p style="margin: 8px 0; font-size: 16px;">Visualización de toma de decisiones</p>
+            <p style="margin: 8px 0; font-size: 16px;">(PREICA2501B020125)</p>
+        </div>
+        """, unsafe_allow_html=True)
         
-        st.subheader("Programa:")
-        st.write("Ingeniería De Software y Datos")
+        st.markdown("""
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 15px;">
+            <h3 style="color: #2c5282; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Programa:</h3>
+            <p style="margin: 8px 0; font-size: 16px;">Ingeniería De Software y Datos</p>
+        </div>
+        """, unsafe_allow_html=True)
     
-    st.caption("Institución Universitaria Digital de Antioquia - 2025")
+    # Centrar la información de la universidad
+    st.markdown("<hr style='margin: 30px 0'>", unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div style="text-align: center; background-color: #f0f4f8; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin: 0 auto; max-width: 600px;">
+        <h2 style="color: #2c5282; margin-bottom: 10px; font-weight: 600;">Institución Universitaria Digital de Antioquia</h2>
+        <p style="font-size: 18px; color: #4a5568; margin-bottom: 0;">2025</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     st.markdown("---")
     
